@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Autor</title>
+    <title>Cadastro de Editora</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
 </head>
@@ -13,21 +13,17 @@
         <nav class="nav-menu">
             <ul>
                 <li><a href="../livro/cadastro_livro.html">Livros</a></li>
-                <li><a href="../editora/cadastro_editora.html">Editoras</a></li>
+                <li><a href="../autor/cadastro_autor.html">Autores</a></li>
+                <li><a href="../loja/menu.html">Menu</a></li>
                 <li><a href="../categoria/cadastro_categoria.html">Categorias</a></li>
-                <li><a href="../index.html">Menu Principal</a></li>
             </ul>
         </nav>
         <div class="card">
-            <h1>Cadastro de Autor</h1>
-            <form method="POST" action="cadastro_autor.php" class="form-grid">
+            <h1>Cadastro de Editora</h1>
+            <form method="POST" action="cadastro_editora.php" class="form-grid">
                 <div class="form-group">
-                    <label for="nome">Nome do Autor:</label>
+                    <label for="nome">Nome da Editora:</label>
                     <input type="text" id="nome" name="nome" required>
-                </div>
-                <div class="form-group">
-                    <label for="pais">País de Origem:</label>
-                    <input type="text" id="pais" name="pais" required>
                 </div>
                 <div class="form-group">
                     <button type="submit" name="cadastrar" class="btn">Cadastrar</button>
@@ -37,8 +33,8 @@
             <div class="options-section">
                 <h2>Opções</h2>
                 <div class="menu-grid">
-                    <a href="excluir_autor.html" class="btn">Excluir Autor</a>
-                    <a href="alterar_autor.html" class="btn">Alterar Autor</a>
+                    <a href="excluir_editora.html" class="btn">Excluir Editora</a>
+                    <a href="alterar_editora.html" class="btn">Alterar Editora</a>
                 </div>
             </div>
         </div>
