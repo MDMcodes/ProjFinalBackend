@@ -82,7 +82,7 @@ if (isset($_POST['alterar'])) {
     <div class="container">
         <nav class="nav-menu">
             <ul>
-                <li><a href="../index.html">Menu Principal</a></li>
+                <li><a href="../menu_livraria.html">Menu Principal</a></li>
             </ul>
         </nav>
         <div class="card">

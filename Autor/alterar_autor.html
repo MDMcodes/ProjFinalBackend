@@ -6,6 +6,46 @@
     <title>Alterar Autor</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        .search-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .search-result {
+            background: rgba(0, 255, 150, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px solid rgba(0, 255, 150, 0.3);
+        }
+        .search-result h3 {
+            margin: 0 0 10px 0;
+            color: #00ff96;
+        }
+        .btn-secondary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="cosmic-bg"></div>
@@ -20,6 +60,32 @@
         </nav>
         <div class="card">
             <h1>Alterar Autor</h1>
+            
+            <!-- Seção de Busca -->
+            <div class="search-section">
+                <h2>Buscar Autor</h2>
+                <form id="searchForm" class="form-grid">
+                    <div class="form-group">
+                        <label for="searchCodigo">Código do Autor:</label>
+                        <input type="number" id="searchCodigo" name="searchCodigo" placeholder="Digite o código para buscar">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" onclick="buscarAutor()" class="btn-secondary">Buscar Autor</button>
+                    </div>
+                </form>
+                
+                <div id="searchResult" class="hidden">
+                    <div class="search-result">
+                        <h3>Autor Encontrado:</h3>
+                        <p><strong>Código:</strong> <span id="resultCodigo"></span></p>
+                        <p><strong>Nome:</strong> <span id="resultNome"></span></p>
+                        <p><strong>País:</strong> <span id="resultPais"></span></p>
+                        <button type="button" onclick="preencherFormulario()" class="btn-secondary">Usar estes dados</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulário de Alteração -->
             <form method="POST" action="cadastro_autor.php" class="form-grid">
                 <div class="form-group">
                     <label for="codigo">Código do Autor:</label>
@@ -34,10 +100,62 @@
                     <input type="text" id="pais" name="pais" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit" name="alterar" class="btn">Alterar</button>
+                    <button type="submit" name="alterar" class="btn">Alterar Autor</button>
+                    <a href="cadastro_autor.html" class="btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>
     </div>
+
+    <script>
+        async function buscarAutor() {
+            const codigo = document.getElementById('searchCodigo').value;
+            
+            if (!codigo) {
+                alert('Por favor, digite um código para buscar.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`listar_autores.php?codigo=${codigo}`);
+                
+                if (response.ok) {
+                    const autor = await response.json();
+                    document.getElementById('resultCodigo').textContent = autor.codigo;
+                    document.getElementById('resultNome').textContent = autor.nome;
+                    document.getElementById('resultPais').textContent = autor.pais;
+                    document.getElementById('searchResult').classList.remove('hidden');
+                } else {
+                    const error = await response.json();
+                    alert('Autor não encontrado com o código ' + codigo);
+                    document.getElementById('searchResult').classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Erro na busca:', error);
+                alert('Erro ao buscar autor. Verifique a conexão.');
+            }
+        }
+
+        function preencherFormulario() {
+            const codigo = document.getElementById('resultCodigo').textContent;
+            const nome = document.getElementById('resultNome').textContent;
+            const pais = document.getElementById('resultPais').textContent;
+            
+            document.getElementById('codigo').value = codigo;
+            document.getElementById('nome').value = nome;
+            document.getElementById('pais').value = pais;
+            
+            // Scroll para o formulário
+            document.querySelector('form[method="POST"]').scrollIntoView({behavior: 'smooth'});
+        }
+
+        // Permitir busca ao pressionar Enter
+        document.getElementById('searchCodigo').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                buscarAutor();
+            }
+        });
+    </script>
 </body>
 </html>
